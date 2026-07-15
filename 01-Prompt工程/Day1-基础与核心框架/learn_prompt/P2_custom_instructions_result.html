@@ -1,0 +1,698 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>🧮 算术练习</title>
+    <!-- Vue 3 Composition API 全局构建 -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js">
+    </script>
+    <style>
+        /* ===== 全局样式 ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'PingFang SC', Roboto, system-ui, -apple-system, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(145deg, #f0f4ff 0%, #e6edf9 100%);
+            padding: 20px;
+        }
+
+        #app {
+            width: 100%;
+            max-width: 560px;
+        }
+
+        /* ===== 主卡片 ===== */
+        .card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 32px;
+            padding: 36px 32px 32px;
+            box-shadow:
+                0 20px 60px rgba(0, 20, 40, 0.08),
+                0 8px 24px rgba(0, 0, 0, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            transition: box-shadow 0.3s ease;
+        }
+
+        /* ===== 头部：标题 + 统计 ===== */
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 22px;
+            font-weight: 700;
+            color: #1a2639;
+            letter-spacing: -0.3px;
+        }
+
+        .logo-icon {
+            font-size: 28px;
+        }
+
+        .stats {
+            display: flex;
+            gap: 18px;
+            font-size: 14px;
+            color: #4a5a72;
+            background: rgba(0, 0, 0, 0.03);
+            padding: 6px 16px 6px 20px;
+            border-radius: 40px;
+            border: 1px solid rgba(0, 0, 0, 0.04);
+        }
+
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .stat-value {
+            font-weight: 700;
+            color: #1a2639;
+            min-width: 20px;
+            text-align: center;
+        }
+        .stat-value.accent {
+            color: #4f7cff;
+        }
+        .stat-value.green {
+            color: #2e9c6a;
+        }
+
+        .stat-divider {
+            width: 1px;
+            background: rgba(0, 0, 0, 0.08);
+            margin: 4px 0;
+        }
+
+        /* ===== 题目展示区 ===== */
+        .question-area {
+            text-align: center;
+            padding: 28px 0 24px;
+            position: relative;
+        }
+
+        .question-number {
+            font-size: 56px;
+            font-weight: 800;
+            color: #1a2639;
+            letter-spacing: 2px;
+            line-height: 1.2;
+            transition: transform 0.2s ease;
+        }
+
+        .question-number .operator {
+            color: #4f7cff;
+            margin: 0 12px;
+            font-weight: 700;
+        }
+        .question-number .equals {
+            color: #8895aa;
+            margin: 0 12px;
+            font-weight: 600;
+        }
+        .question-number .question-mark {
+            color: #4f7cff;
+            font-weight: 700;
+            margin-left: 8px;
+        }
+
+        .difficulty-badge {
+            display: inline-block;
+            margin-top: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #8895aa;
+            background: rgba(0, 0, 0, 0.04);
+            padding: 2px 14px;
+            border-radius: 40px;
+            letter-spacing: 0.3px;
+            text-transform: uppercase;
+        }
+
+        /* ===== 输入区 ===== */
+        .input-area {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            justify-content: center;
+            margin: 4px 0 12px;
+            flex-wrap: wrap;
+        }
+
+        .input-area input {
+            width: 160px;
+            padding: 14px 18px;
+            font-size: 24px;
+            font-weight: 600;
+            text-align: center;
+            border: 2px solid #dce3ed;
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.7);
+            color: #1a2639;
+            outline: none;
+            transition: border-color 0.25s ease, box-shadow 0.25s ease;
+            font-family: inherit;
+        }
+
+        .input-area input:focus {
+            border-color: #4f7cff;
+            box-shadow: 0 0 0 4px rgba(79, 124, 255, 0.12);
+        }
+
+        .input-area input:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* 隐藏 input 的上下箭头 */
+        .input-area input[type="number"]::-webkit-outer-spin-button,
+        .input-area input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        .input-area input[type="number"] {
+            -moz-appearance: textfield;
+            appearance: textfield;
+        }
+
+        .btn {
+            padding: 14px 28px;
+            font-size: 18px;
+            font-weight: 700;
+            border: none;
+            border-radius: 16px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: inherit;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            user-select: none;
+        }
+
+        .btn:active {
+            transform: scale(0.96);
+        }
+
+        .btn-primary {
+            background: #4f7cff;
+            color: #fff;
+            box-shadow: 0 4px 14px rgba(79, 124, 255, 0.3);
+        }
+        .btn-primary:hover {
+            background: #3d68e0;
+            box-shadow: 0 6px 20px rgba(79, 124, 255, 0.35);
+        }
+        .btn-primary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        .btn-secondary {
+            background: rgba(0, 0, 0, 0.04);
+            color: #4a5a72;
+            border: 1px solid rgba(0, 0, 0, 0.06);
+        }
+        .btn-secondary:hover {
+            background: rgba(0, 0, 0, 0.07);
+        }
+
+        /* ===== 反馈区 ===== */
+        .feedback {
+            min-height: 52px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: 600;
+            border-radius: 16px;
+            padding: 12px 16px;
+            margin: 8px 0 4px;
+            transition: all 0.3s ease;
+            background: rgba(0, 0, 0, 0.02);
+        }
+
+        .feedback.correct {
+            background: rgba(46, 156, 106, 0.10);
+            color: #1e7b52;
+        }
+        .feedback.wrong {
+            background: rgba(227, 78, 78, 0.10);
+            color: #b53b3b;
+        }
+        .feedback .answer-reveal {
+            font-weight: 700;
+            background: rgba(0, 0, 0, 0.04);
+            padding: 0 10px;
+            border-radius: 6px;
+            margin-left: 6px;
+        }
+
+        /* ===== 底部控制 ===== */
+        .footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 16px;
+            padding-top: 18px;
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .difficulty-group {
+            display: flex;
+            gap: 6px;
+        }
+
+        .btn-difficulty {
+            padding: 6px 18px;
+            font-size: 13px;
+            font-weight: 600;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            border-radius: 40px;
+            background: transparent;
+            color: #4a5a72;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: inherit;
+        }
+
+        .btn-difficulty:hover {
+            background: rgba(0, 0, 0, 0.04);
+        }
+
+        .btn-difficulty.active {
+            background: #1a2639;
+            color: #fff;
+            border-color: #1a2639;
+        }
+
+        .btn-reset {
+            padding: 6px 18px;
+            font-size: 13px;
+            font-weight: 600;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            border-radius: 40px;
+            background: transparent;
+            color: #8895aa;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: inherit;
+        }
+
+        .btn-reset:hover {
+            background: rgba(0, 0, 0, 0.04);
+            color: #e34e4e;
+            border-color: rgba(227, 78, 78, 0.2);
+        }
+
+        /* ===== 键盘提示 ===== */
+        .hint {
+            text-align: center;
+            font-size: 12px;
+            color: #aab5c8;
+            margin-top: 12px;
+            letter-spacing: 0.3px;
+        }
+
+        /* ===== 响应式 ===== */
+        @media (max-width: 480px) {
+            .card {
+                padding: 24px 18px 24px;
+                border-radius: 24px;
+            }
+            .question-number {
+                font-size: 38px;
+            }
+            .input-area input {
+                width: 130px;
+                font-size: 20px;
+                padding: 12px 12px;
+            }
+            .btn {
+                padding: 12px 20px;
+                font-size: 16px;
+            }
+            .stats {
+                font-size: 12px;
+                padding: 4px 12px 4px 16px;
+                gap: 12px;
+            }
+            .logo {
+                font-size: 18px;
+            }
+            .logo-icon {
+                font-size: 22px;
+            }
+            .feedback {
+                font-size: 15px;
+                min-height: 44px;
+                padding: 8px 12px;
+            }
+            .difficulty-group {
+                gap: 4px;
+            }
+            .btn-difficulty {
+                padding: 4px 12px;
+                font-size: 11px;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .question-number {
+                font-size: 30px;
+            }
+            .input-area input {
+                width: 100px;
+                font-size: 18px;
+            }
+            .btn {
+                padding: 10px 16px;
+                font-size: 14px;
+            }
+            .stats {
+                font-size: 11px;
+                padding: 2px 8px 2px 12px;
+                gap: 8px;
+                flex-wrap: wrap;
+            }
+        }
+
+        /* ===== 入场动画 ===== */
+        @keyframes fadeSlideUp {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .question-number {
+            animation: fadeSlideUp 0.3s ease-out;
+        }
+        .feedback.correct,
+        .feedback.wrong {
+            animation: fadeSlideUp 0.25s ease-out;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="app">
+        <div class="card">
+            <!-- 头部 -->
+            <div class="header">
+                <div class="logo">
+                    <span class="logo-icon">🧮</span>
+                    <span>算术练习</span>
+                </div>
+                <div class="stats">
+                    <span class="stat-item">
+                        得分 <span class="stat-value accent">{{ score }}</span>
+                    </span>
+                    <span class="stat-divider"></span>
+                    <span class="stat-item">
+                        题数 <span class="stat-value">{{ total }}</span>
+                    </span>
+                    <span class="stat-divider"></span>
+                    <span class="stat-item">
+                        正确率
+                        <span class="stat-value green">{{ accuracy }}%</span>
+                    </span>
+                </div>
+            </div>
+
+            <!-- 题目 -->
+            <div class="question-area">
+                <div class="question-number" :key="questionKey">
+                    <span>{{ question.a }}</span>
+                    <span class="operator">{{ question.operator }}</span>
+                    <span>{{ question.b }}</span>
+                    <span class="equals">=</span>
+                    <span class="question-mark">?</span>
+                </div>
+                <div class="difficulty-badge">
+                    {{ difficultyLabel }}
+                </div>
+            </div>
+
+            <!-- 输入 -->
+            <div class="input-area">
+                <input
+                ref="inputRef"
+                v-model="userAnswer"
+                type="number"
+                placeholder="输入答案"
+                :disabled="answered"
+                @keydown.enter="submitAnswer"
+                autocomplete="off"
+                />
+                <button
+                class="btn btn-primary"
+                :disabled="!canSubmit"
+                @click="submitAnswer"
+                >
+                提交
+            </button>
+        </div>
+
+        <!-- 反馈 -->
+        <div class="feedback" :class="feedbackClass" v-if="feedbackMessage">
+            <span>{{ feedbackMessage }}</span>
+            <span class="answer-reveal" v-if="showCorrectAnswer">{{ question.correctAnswer }}</span>
+        </div>
+
+        <!-- 底部控制 -->
+        <div class="footer">
+            <div class="difficulty-group">
+                <button
+                v-for="d in difficulties"
+                :key="d.value"
+                class="btn-difficulty"
+                :class="{ active: difficulty === d.value }"
+                @click="setDifficulty(d.value)"
+                >
+                {{ d.label }}
+            </button>
+        </div>
+        <button class="btn-reset" @click="resetGame">
+            ↻ 重置
+        </button>
+    </div>
+
+    <div class="hint">
+        Enter 提交 · 自动下一题
+    </div>
+</div>
+</div>
+
+<script>
+    const { createApp, ref, computed, onMounted, nextTick } = Vue;
+
+    // ===== 应用定义 =====
+    createApp({
+        setup() {
+            // ----- 状态 -----
+            const difficulty = ref('easy'); // 'easy' | 'medium' | 'hard'
+            const score = ref(0);
+            const total = ref(0);
+            const userAnswer = ref('');
+            const answered = ref(false);
+            const feedbackMessage = ref('');
+            const feedbackType = ref(''); // '' | 'correct' | 'wrong'
+            const questionKey = ref(0);
+
+            // 当前题目
+            const question = ref({
+                a: 0,
+                b: 0,
+                operator: '+',
+                correctAnswer: 0,
+            });
+
+            // DOM 引用
+            const inputRef = ref(null);
+
+            // ----- 配置 -----
+            const difficulties = [
+                { label: '简单 1-10', value: 'easy' },
+                { label: '中等 1-50', value: 'medium' },
+                { label: '困难 1-100', value: 'hard' },
+            ];
+
+            const difficultyRange = computed(() => {
+                const map = { easy: 10, medium: 50, hard: 100 };
+                return map[difficulty.value] || 10;
+            });
+
+            const difficultyLabel = computed(() => {
+                const map = { easy: '简单 · 1~10', medium: '中等 · 1~50', hard: '困难 · 1~100' };
+                return map[difficulty.value] || '简单 · 1~10';
+            });
+
+            // ----- 计算属性 -----
+            const accuracy = computed(() => {
+                if (total.value === 0) return 0;
+                return Math.round((score.value / total.value) * 100);
+            });
+
+            const canSubmit = computed(() => {
+                return !answered.value && userAnswer.value !== '' && userAnswer.value !== null;
+            });
+
+            const showCorrectAnswer = computed(() => {
+                return feedbackType.value === 'wrong';
+            });
+
+            const feedbackClass = computed(() => {
+                if (feedbackType.value === 'correct') return 'correct';
+                if (feedbackType.value === 'wrong') return 'wrong';
+                return '';
+            });
+
+            // ----- 工具函数 -----
+            function randomInt(min, max) {
+                return Math.floor(Math.random() * (max - min + 1)) + min;
+            }
+
+            function generateQuestion() {
+                const max = difficultyRange.value;
+                const isAddition = Math.random() < 0.5;
+                let a, b, operator, correctAnswer;
+
+                if (isAddition) {
+                    a = randomInt(1, max);
+                    b = randomInt(1, max);
+                    operator = '+';
+                    correctAnswer = a + b;
+                } else {
+                    // 减法：确保 a >= b，结果非负
+                    a = randomInt(1, max);
+                    b = randomInt(1, max);
+                    if (a < b)[a, b] = [b, a];
+                    operator = '−';
+                    correctAnswer = a - b;
+                }
+
+                return { a, b, operator, correctAnswer };
+            }
+
+            // ----- 核心方法 -----
+            function nextQuestion() {
+                question.value = generateQuestion();
+                questionKey.value++;
+                userAnswer.value = '';
+                answered.value = false;
+                feedbackMessage.value = '';
+                feedbackType.value = '';
+                // 自动聚焦
+                nextTick(() => {
+                    inputRef.value?.focus();
+                });
+            }
+
+            function submitAnswer() {
+                if (!canSubmit.value) return;
+
+                const userAns = Number(userAnswer.value);
+                if (isNaN(userAns)) return;
+
+                const isCorrect = userAns === question.value.correctAnswer;
+                total.value++;
+
+                if (isCorrect) {
+                    score.value++;
+                    feedbackMessage.value = '✅ 完全正确！';
+                    feedbackType.value = 'correct';
+                } else {
+                    feedbackMessage.value = '❌ 答错了，正确答案是';
+                    feedbackType.value = 'wrong';
+                }
+
+                answered.value = true;
+
+                // 延迟自动跳转下一题
+                setTimeout(() => {
+                    nextQuestion();
+                }, isCorrect ? 800 : 1600);
+            }
+
+            function setDifficulty(val) {
+                if (difficulty.value === val) return;
+                difficulty.value = val;
+                resetGame();
+            }
+
+            function resetGame() {
+                score.value = 0;
+                total.value = 0;
+                feedbackMessage.value = '';
+                feedbackType.value = '';
+                nextQuestion();
+            }
+
+            // ----- 生命周期 -----
+            onMounted(() => {
+                nextQuestion();
+                // 全局键盘监听：防止回车导致页面刷新
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' && e.target?.tagName === 'INPUT') {
+                        e.preventDefault();
+                    }
+                });
+            });
+
+            // ----- 暴露给模板 -----
+            return {
+                difficulty,
+                difficulties,
+                difficultyLabel,
+                score,
+                total,
+                accuracy,
+                userAnswer,
+                answered,
+                feedbackMessage,
+                feedbackType,
+                feedbackClass,
+                showCorrectAnswer,
+                question,
+                questionKey,
+                canSubmit,
+                inputRef,
+                submitAnswer,
+                setDifficulty,
+                resetGame,
+            };
+        },
+    }).mount('#app');
+</script>
+
+</body>
+</html>

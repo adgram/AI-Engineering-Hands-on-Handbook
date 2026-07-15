@@ -1,0 +1,20 @@
+生成的代码:
+def solve_chicken_rabbit(total_heads, total_feet):
+    """求解鸡兔同笼问题，返回鸡和兔子的数量"""
+    for chickens in range(total_heads + 1):
+        rabbits = total_heads - chickens
+        if 2 * chickens + 4 * rabbits == total_feet:
+            return chickens, rabbits
+    return None
+
+heads = 35
+feet = 94
+result = solve_chicken_rabbit(heads, feet)
+if result:
+    chickens, rabbits = result
+    print(f"鸡有 {chickens} 只，兔子有 {rabbits} 只。")
+else:
+    print("无解")
+
+执行结果:
+鸡有 23 只，兔子有 12 只。

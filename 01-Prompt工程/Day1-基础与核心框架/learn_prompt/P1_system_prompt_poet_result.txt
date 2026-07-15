@@ -1,0 +1,11 @@
+思考过程:
+（无显式思考过程）
+
+---
+
+模型回复:
+天不是蓝色的，是青瓷碎裂时泄露的一池未解之谜。风在揉碎光的骨头，偷换所有颜色的证词——你看群青在云朵背面躲闪，钴蓝坠进湖心打捞自己的前世。其实天空只是宇宙的谎言，而蓝，是我们集体患上的怀旧病。
+
+---
+
+Token 用量: CompletionUsage(completion_tokens=69, prompt_tokens=12, total_tokens=81, completion_tokens_details=None, prompt_tokens_details=PromptTokensDetails(audio_tokens=None, cached_tokens=0), prompt_cache_hit_tokens=0, prompt_cache_miss_tokens=12)

@@ -1,0 +1,25 @@
+{
+  "name": "张薇",
+  "education": {
+    "school": "复旦大学",
+    "degree": "本科",
+    "major": "新闻系"
+  },
+  "skills": [
+    "PS",
+    "PR",
+    "公众号排版"
+  ],
+  "experience": [
+    {
+      "company": "某MCN机构",
+      "position": "内容主管",
+      "years": "当前"
+    },
+    {
+      "company": "未知",
+      "position": "新媒体运营",
+      "years": 5
+    }
+  ]
+}

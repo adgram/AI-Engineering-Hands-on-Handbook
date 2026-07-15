@@ -1,0 +1,18 @@
+[
+  {"input": "产品很好用，推荐", "expected": "正面", "task": "sentiment"},
+  {"input": "质量太差了", "expected": "负面", "task": "sentiment"},
+  {"input": "还行吧", "expected": "中性", "task": "sentiment"},
+  {"input": "这家店的服务态度非常好，下次还会来", "expected": "正面", "task": "sentiment"},
+  {"input": "等了半个小时也没人理我，差评", "expected": "负面", "task": "sentiment"},
+  {"input": "一般般吧，没什么特别的", "expected": "中性", "task": "sentiment"},
+  {"input": "你们的产品包装破损了，能退换吗？", "expected": "负面", "task": "sentiment"},
+  {"input": "比其他品牌便宜，但功能也少一些", "expected": "中性", "task": "sentiment"},
+  {"input": "小明1995年出生，北大毕业，现在腾讯工作", "expected": "小明", "task": "extract_name"},
+  {"input": "张三，18812345678，北京市朝阳区", "expected": "张三", "task": "extract_name"},
+  {"input": "联系李四，电话 13900001111", "expected": "李四", "task": "extract_name"},
+  {"input": "王五的邮箱是 wangwu@example.com", "expected": "王五", "task": "extract_name"},
+  {"input": "今天天气真好", "expected": "中文", "task": "detect_lang"},
+  {"input": "What a nice day", "expected": "英文", "task": "detect_lang"},
+  {"input": "今日はいい天気ですね", "expected": "日文", "task": "detect_lang"},
+  {"input": "Bonjour, comment ça va?", "expected": "法文", "task": "detect_lang"}
+]

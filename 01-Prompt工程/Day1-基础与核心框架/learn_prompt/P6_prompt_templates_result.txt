@@ -1,0 +1,3 @@
+思考过程: 我们根据上下文，RAG全称是Retrieval-augmented Generation。
+
+回复: 根据上下文，RAG全称是“检索增强生成”（Retrieval-augmented Generation）。

@@ -1,0 +1,20 @@
+思考过程:
+（无显式思考过程）
+
+---
+
+模型回复:
+这是一个非常经典的科学问题。简单来说，天空呈现蓝色是由于**太阳光的散射**，具体是**瑞利散射**在起作用。下面我从物理原理的角度，严谨地解释这一现象。
+
+1.  **光源：太阳光是复合光**
+    太阳发出的光看起来是白色的，但实际包含了从红到紫的连续光谱（即红、橙、黄、绿、蓝、靛、紫等不同波长的可见光）。不同颜色的光，其波长不同：红光波长最长（约700纳米），紫光波长最短（约400纳米）。
+
+2.  **介质：大气层中的粒子**
+    太阳光在到达地球表面之前，必须先穿过厚厚的大气层。大气中含有大量的气体分子（主要是氮气和氧气）以及微小的尘埃、水滴等。
+
+3.  **核心机制：瑞利散射**
+    当太阳光遇到这些远小于其波长的气体分子时，会发生一种称为**瑞利散射**的现象
+
+---
+
+Token 用量: CompletionUsage(completion_tokens=200, prompt_tokens=14, total_tokens=214, completion_tokens_details=None, prompt_tokens_details=PromptTokensDetails(audio_tokens=None, cached_tokens=0), prompt_cache_hit_tokens=0, prompt_cache_miss_tokens=14)

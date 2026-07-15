@@ -1,0 +1,9 @@
+{
+  "sentiment": "mixed",
+  "topics": [
+    "电池续航",
+    "拍照效果"
+  ],
+  "intent": "抱怨",
+  "urgency": "medium"
+}

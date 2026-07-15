@@ -1,0 +1,8 @@
+Workspace: OK
+StateManager: OK
+ToolRegistry: 2 tools
+Guardrails: blocked
+Budget: 预算: 3/3 轮, 3600/8000 tokens
+Tracer: 3 steps
+ControlLoop: 2 rounds, 1180 tokens
+Executor: {'success': 1, 'failure': 0, 'success_rate': 1.0}

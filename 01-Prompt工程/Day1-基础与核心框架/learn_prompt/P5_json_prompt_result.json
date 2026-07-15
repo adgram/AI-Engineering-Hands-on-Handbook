@@ -1,0 +1,15 @@
+{
+  "name": "李四",
+  "age": 28,
+  "education": {
+    "school": "上海交通大学",
+    "degree": "硕士"
+  },
+  "job": {
+    "company": "字节跳动",
+    "position": "产品经理"
+  },
+  "skills": [
+    "数据分析"
+  ]
+}

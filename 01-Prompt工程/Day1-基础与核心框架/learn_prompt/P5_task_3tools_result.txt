@@ -1,0 +1,16 @@
+思考过程: 我们需要分别做三件事：
+1. 查询北京的天气
+2. 计算 12345 × 6789
+3. 将 'hello world' 翻译成中文
+
+这三件事没有依赖关系，可以同时进行。
+
+调用: get_weather
+参数: {"city": "北京"}
+
+调用: calculate
+参数: {"expression": "12345*6789"}
+
+调用: translate
+参数: {"text": "hello world", "target": "中文"}
+

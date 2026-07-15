@@ -1,0 +1,11 @@
+思考过程:
+我们要求用一句话解释什么是Large Language Model（大型语言模型）。需要简洁但深刻。核心要点：它是一种基于深度学习的模型，通过海量文本数据训练，能够理解和生成自然语言。可以强调其规模、训练数据、能力。
+
+---
+
+模型回复:
+大型语言模型是一种基于海量文本数据训练、拥有数亿至数千亿参数的深度神经网络，能够通过上下文学习生成连贯且符合人类习惯的自然语言。
+
+---
+
+Token 用量: CompletionUsage(completion_tokens=86, prompt_tokens=23, total_tokens=109, completion_tokens_details=CompletionTokensDetails(accepted_prediction_tokens=None, audio_tokens=None, reasoning_tokens=51, rejected_prediction_tokens=None), prompt_tokens_details=PromptTokensDetails(audio_tokens=None, cached_tokens=0), prompt_cache_hit_tokens=0, prompt_cache_miss_tokens=23)

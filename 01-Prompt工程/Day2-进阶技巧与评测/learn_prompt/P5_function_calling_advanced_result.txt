@@ -1,0 +1,4 @@
+模型选择了 3 个函数:
+  🔧 book_flight({"from": "北京", "to": "上海", "date": "2025-04-09", "passengers": 1})
+  🔧 get_weather({"city": "上海", "date": "2025-04-09"})
+  🔧 search_hotels({"city": "上海", "check_in": "2025-04-09", "check_out": "2025-04-10", "stars": 5, "amenities": ["外滩"]})
