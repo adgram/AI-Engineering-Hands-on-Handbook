@@ -1,0 +1,56 @@
+测试用例1:
+{
+  "question": "RAG 有什么优势？",
+  "answer": "RAG 可以减少幻觉，支持最新知识，具有可追溯性，不需要重新训练模型。",
+  "faithfulness": {
+    "faithfulness_score": 10,
+    "is_hallucination": false,
+    "hallucinated_parts": [],
+    "reason": "回答完全基于上下文，没有编造内容。"
+  },
+  "relevance": {
+    "relevance_score": 10,
+    "reason": "回答直接列举了RAG的多个关键优势，完全正确且信息充分。"
+  },
+  "overall": 10.0
+}
+
+测试用例2:
+{
+  "question": "RAG 有什么优势？",
+  "answer": "RAG 可以提高模型训练速度，减少 GPU 使用量，并且能自动优化模型参数。",
+  "faithfulness": {
+    "faithfulness_score": 0,
+    "is_hallucination": true,
+    "hallucinated_parts": [
+      "提高模型训练速度",
+      "减少 GPU 使用量",
+      "自动优化模型参数"
+    ],
+    "reason": "回答内容与上下文完全无关，上下文仅提及RAG降低幻觉风险和支持最新知识更新，而回答编造了训练速度、GPU使用和参数优化等未提及的信息。"
+  },
+  "relevance": {
+    "relevance_score": 1,
+    "reason": "回答内容描述的是模型训练加速和优化，并非RAG（检索增强生成）的核心优势，如融合外部知识、减少幻觉、提升信息准确性等，因此几乎不相关。"
+  },
+  "overall": 0.5
+}
+
+测试用例3:
+{
+  "question": "RAG 的工作流程是什么？",
+  "answer": "向量数据库使用余弦相似度计算向量间的相关性。",
+  "faithfulness": {
+    "faithfulness_score": 0,
+    "is_hallucination": true,
+    "hallucinated_parts": [
+      "向量数据库使用余弦相似度计算向量间的相关性"
+    ],
+    "reason": "上下文没有提及向量数据库或余弦相似度，回答完全编造。"
+  },
+  "relevance": {
+    "relevance_score": 5,
+    "reason": "回答部分相关，提到了RAG中向量数据库的相似度计算，但没有完整描述RAG的工作流程，如检索和生成阶段。"
+  },
+  "overall": 2.5
+}

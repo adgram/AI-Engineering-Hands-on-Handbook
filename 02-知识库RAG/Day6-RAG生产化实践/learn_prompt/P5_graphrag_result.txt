@@ -1,0 +1,1 @@
+P5_graphrag 模块加载完成，包含 SimpleGraphRAG 类（实体提取 + 图检索）

@@ -1,0 +1,1 @@
+分层RAG已配置，层级: global + domain + document
